@@ -1,0 +1,31 @@
+version: "3.4"
+
+services:
+  publisher:
+    build: publisher
+    environment:
+      - SUBSCRIBER_IP_ADDRESS=172.16.0.2
+      - SUBSCRIBER_PORT=10000
+      - SUBSCRIBER_STREAM_ID=10000
+    networks:
+      aeron_network:
+        ipv4_address: 172.16.0.4
+
+  subscriber:
+    build: subscriber
+    environment:
+      - SUBSCRIBER_IP_ADDRESS=172.16.0.2
+      - SUBSCRIBER_PORT=10000
+      - SUBSCRIBER_STREAM_ID=10000
+    networks:
+      aeron_network:
+        ipv4_address: 172.16.0.2
+
+networks:
+  aeron_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/24
+
