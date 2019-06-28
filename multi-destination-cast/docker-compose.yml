@@ -10,7 +10,7 @@ services:
       aeron_mdc_network:
         ipv4_address: 172.16.1.4
 
-  subscriber:
+  subscriber1:
     build: ../containers/subscriber
     environment:
       - SUBSCRIBER_CHANNEL=aeron:udp?control=172.16.1.4:10000
@@ -18,6 +18,15 @@ services:
     networks:
       aeron_mdc_network:
         ipv4_address: 172.16.1.2
+
+  subscriber2:
+    build: ../containers/subscriber
+    environment:
+      - SUBSCRIBER_CHANNEL=aeron:udp?control=172.16.1.4:10000
+      - SUBSCRIBER_STREAM_ID=1
+    networks:
+      aeron_mdc_network:
+        ipv4_address: 172.16.1.6
 
 networks:
   aeron_mdc_network:
