@@ -2,21 +2,19 @@ version: "3.4"
 
 services:
   publisher:
-    build: publisher
+    build: ../containers/publisher
     environment:
-      - SUBSCRIBER_IP_ADDRESS=172.16.0.2
-      - SUBSCRIBER_PORT=10000
-      - SUBSCRIBER_STREAM_ID=10000
+      - SUBSCRIBER_CHANNEL=aeron:udp?endpoint=172.16.0.2:10000
+      - SUBSCRIBER_STREAM_ID=1
     networks:
       aeron_network:
         ipv4_address: 172.16.0.4
 
   subscriber:
-    build: subscriber
+    build: ../containers/subscriber
     environment:
-      - SUBSCRIBER_IP_ADDRESS=172.16.0.2
-      - SUBSCRIBER_PORT=10000
-      - SUBSCRIBER_STREAM_ID=10000
+      - SUBSCRIBER_CHANNEL=aeron:udp?endpoint=172.16.0.2:10000
+      - SUBSCRIBER_STREAM_ID=1
     networks:
       aeron_network:
         ipv4_address: 172.16.0.2
