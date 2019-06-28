@@ -1,0 +1,28 @@
+version: "3.4"
+
+services:
+  publisher:
+    build: ../containers/publisher
+    environment:
+      - SUBSCRIBER_CHANNEL=aeron:udp?control=172.16.1.4:10000
+      - SUBSCRIBER_STREAM_ID=1
+    networks:
+      aeron_mdc_network:
+        ipv4_address: 172.16.1.4
+
+  subscriber:
+    build: ../containers/subscriber
+    environment:
+      - SUBSCRIBER_CHANNEL=aeron:udp?control=172.16.1.4:10000
+      - SUBSCRIBER_STREAM_ID=1
+    networks:
+      aeron_mdc_network:
+        ipv4_address: 172.16.1.2
+
+networks:
+  aeron_mdc_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.1.0/24
+
