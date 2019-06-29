@@ -1,16 +1,10 @@
 version: "3.4"
 
-# TODO - this is broken. It seems like Aeron only binds
-#        with SO_REUSEADDR when subscribing. Therefore,
-#        I still this error when the publisher runs:
-#
-#        Address already in use (at sun.nio.ch.Net.bind0(Native Method)): aeron:udp?control=239.9.9.1:10000
-
 services:
   publisher:
     build: ../containers/publisher
     environment:
-      - SUBSCRIBER_CHANNEL=aeron:udp?control=239.9.9.1:10000
+      - SUBSCRIBER_CHANNEL=aeron:udp?endpoint=239.9.9.1:10000
       - SUBSCRIBER_STREAM_ID=1
     network_mode: host
 
